@@ -91,6 +91,7 @@ class User extends Database {
                 $row = $result[0];
                     
                 $_SESSION['user_id'] = $row['id'];
+                $_SESSION['user_rank'] = $row['rank'];
 
                 return "";
             }else {
@@ -100,4 +101,40 @@ class User extends Database {
         }
         return $Error;
     }
+}
+
+function access($needed_rank)
+{
+    $user_rank =isset( $_SESSION['user_rank']) ?  $_SESSION['user_rank'] : "";
+    switch ($needed_rank) {
+        case 'value':
+            # code...
+            $allowed[] = "admin";
+
+            return in_array($user_rank, $allowed);
+            break;
+        
+        case 'editor':
+            # code...
+            $allowed[] = "admin";
+            $allowed[] = "editor";
+
+            return in_array($user_rank, $allowed);
+            break;
+        
+        case 'user':
+            # code...
+            
+            $allowed[] = "admin";
+            $allowed[] = "editor";
+            $allowed[] = "user";
+
+            return in_array($user_rank, $allowed);
+            break;
+        
+        default:
+            # code...
+            break;
+    }
+    return false;
 }

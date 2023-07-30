@@ -45,28 +45,29 @@
 
 		<center><h1 style="color:#f0f;">All Posts</h1></center>
 
-		<?php
-
-
-			//get posts
-			//get posts
-			$posts = new Posts();
-			$result = $posts->get_all_posts();
-		?>
-		<?php 	if($result) : ?>
-					
-					<?php foreach($result as $item) : ?>
-						<div class='post'>
-							<div>
-								<h2><?= $item['title']; ?></h2>
+		<?php if(access("admin")) : ?>
+			<?php
+				//get posts
+				//get posts
+				$posts = new Posts();
+				$result = $posts->get_all_posts();
+			?>
+			<?php 	if($result) : ?>
+						
+						<?php foreach($result as $item) : ?>
+							<div class='post'>
+								<div>
+									<h2><?= $item['title']; ?></h2>
+								</div>
+								<p class='text'><?= $item['post']; ?></p>
+								<p class='timestamp'><?= date("jS M, Y",strtotime($item['date'])); ?></p>
+								<br style='clear: both;'>
 							</div>
-							<p class='text'><?= $item['post']; ?></p>
-							<p class='timestamp'><?= date("jS M, Y",strtotime($item['date'])); ?></p>
-							<br style='clear: both;'>
-						</div>
-				<?php endforeach; ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			<?php else : ?>
+				<p>Maaf Kamu tidak ada akses</p>
 			<?php endif; ?>
-
 	</div>
 </body>
 </html>
