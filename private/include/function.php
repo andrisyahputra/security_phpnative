@@ -159,3 +159,9 @@ function access($needed_rank)
     }
     return false;
 }
+
+function clean($data){
+
+    return htmlspecialchars($data);
+
+}

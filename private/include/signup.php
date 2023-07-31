@@ -46,12 +46,13 @@ if(count($_POST) > 0)
 		$password	= addslashes($_POST['password']);
 		$gender	= addslashes($_POST['gender']);
 		$name	= addslashes($_POST['name']);
+		$rank = "user";
 
 		//save user
-		$query = "insert into users (email,password,gender,name) values ('$email','$password','$gender','$name')";
+		$query = "insert into users (email,password,gender,name,rank) values ('$email','$password','$gender','$name','$rank')";
 		$result = mysqli_query($con,$query);
  
- 		header("Location: login.php");
+ 		header("Location: http://localhost:8080/security/security/public/login");
  		die;
 
 	}
