@@ -56,7 +56,7 @@
 						<?php foreach($result as $item) : ?>
 							<div class='post'>
 								<div>
-									<h2><?= $item['title']; ?></h2>
+									<h2><?= clean($item['title']); ?></h2>
 								</div>
 								<p class='text'><?= $item['post']; ?></p>
 								<p class='timestamp'><?= date("jS M, Y",strtotime($item['date'])); ?></p>
