@@ -76,19 +76,19 @@ if (isset($_GET['id']) || isset($_SESSION['user_id'])):
 	        <?php foreach ($result as $row): ?>
 	        <div class='post'>
 	            <div>
-	                <h2>Name: <?=clean($row['name']);?></h2>
+	                <h2>Name: <?=htmlspecialchars($row['name']);?></h2>
 	            </div>
 	            <div>
-	                <h2>Email: <?=clean($row['email']);?></h2>
+	                <h2>Email: <?=htmlspecialchars($row['email']);?></h2>
 	            </div>
 	            <div>
-	                <p class='text'>Rank: <?=clean($row['rank']);?></p>
+	                <p class='text'>Rank: <?=htmlspecialchars($row['rank']);?></p>
 	            </div>
 	            <div>
-	                <p class='text'>Gender: <?=clean($row['gender']);?></p>
+	                <p class='text'>Gender: <?=htmlspecialchars($row['gender']);?></p>
 	            </div>
 	            <div>
-	                <p class='text'>Password: <?=clean($row['password']);?></p>
+	                <p class='text'>Password: <?=htmlspecialchars($row['password']);?></p>
 	            </div>
 
 	            <br style='clear: both;'>
