@@ -1,40 +1,47 @@
 <?php
 class Database {
     private function connection(){
-        if(!$con = mysqli_connect("localhost","root","","security_db"))
-			{
-				die("could not connect to the database");
-			}
+
+        try {
+            //code...
+            $string = "mysql:host=localhost;dbname=security_db";
+            $con = new PDO($string, "root","");
+        } catch (PDOException $th) {
+          if($_SERVER['HTTP_HOST'] == "localhost"){
+            die($th->getMessage());
+          } else {
+            die("could not connect to the database");
+          }
+        }
+
         return $con;
     }
-    public function db_read($query){
+    public function db_read($query,$data = array()){
         $con = $this->connection();
-        $result = mysqli_query($con,$query);
-
-        if($result && mysqli_num_rows($result) > 0)
-        {
-                $data = [];
-                while ($row = mysqli_fetch_assoc($result)) {
-                    // code...
-
-                    //display posts
-                    $data[]= $row;
+        $stm = $con->prepare($query);
+        if($stm){
+            $check = $stm->execute($data);
+            if ($check){
+                $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+                if(is_array($result)&& count($result)>0){
+                    return $result;
+                }
             }
-
-            
-            return $data;
         }
         
         return false;
     }
 
-    public function db_write($query){
+    public function db_write($query, $data = array()){
         $con = $this->connection();
-        $result = mysqli_query($con,$query);
-
-        if($result)
-        {          
-            return true;
+        $stm = $con->prepare($query);
+        if($stm){
+            $check = $stm->execute($data);
+            if ($check){
+                
+                    return true;
+                
+            }
         }
         
         return false;
@@ -52,11 +59,12 @@ class Posts extends Database {
     }
     
     public function get_one_posts($id){
+        $arr = array();
         // $id = (int)$id;
-        $id = addslashes($id);
-        $query = "select * from posts where id= '$id' limit 1";
-        echo "$query";
-			return $this->db_read($query);
+        // $id = addslashes($id);
+        $arr['id'] = (int)$id;
+        $query = "select * from posts where id = :id limit 1";
+			return $this->db_read($query,$arr);
     }
     
 }
@@ -82,14 +90,15 @@ class User extends Database {
         
         if($Error == "")
         {
-            $email	= addslashes($POST['email']);
-            $password	= addslashes($POST['password']);
+            $arr = [];
+            $arr['email']	= addslashes($POST['email']);
+            $arr['password']	= addslashes($POST['password']);
     
             //get user
-            $query = "select * from users where email = '$email' && password = '$password' ";
+            $query = "select * from users where email = :email && password = :password ";
             // echo "$query";
             // die;
-            $result = $this->db_read($query);
+            $result = $this->db_read($query,$arr);
     
             if($result)
             {
@@ -105,6 +114,13 @@ class User extends Database {
 
         }
         return $Error;
+    }
+
+    public function get_profile($id){
+        $arr = [];
+        $arr['id'] = (int)$id;
+        $query = "select * from users where id = :id limit 1";
+        return $this->db_read($query,$arr);
     }
 }
 
