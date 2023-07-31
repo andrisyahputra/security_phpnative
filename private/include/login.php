@@ -1,4 +1,7 @@
 <?php
+// $a = "andri'syahp'putra";
+// echo addslashes($a); //andri\'syahp\'putra
+
 $Error = "";
 
 if(count($_POST) > 0)
@@ -105,7 +108,7 @@ if(count($_POST) > 0)
 				}
 			?>
 			<br>
- 			<input type="email" name="email" placeholder="Email"><br>
+ 			<input type="text" name="email" placeholder="Email"><br>
 			<input type="password" name="password" placeholder="password"><br>
  			<br>
 			<input class="btn" type="submit" value="Login">

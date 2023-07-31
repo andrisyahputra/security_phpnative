@@ -63,7 +63,7 @@
 								<h2><?= $item['title']; ?></h2>
 							</div>
 							<p class='text'><?= substr($item['post'],0,200); ?></p>
-							<a href='posts.php'>..read more..</a>
+							<a href='post?id=<?= $item['id'] ?>'>..read more..</a>
 							<p class='timestamp'><?= date("jS M, Y",strtotime($item['date'])) ?></p>
 							<br style='clear: both;'>
 						</div>

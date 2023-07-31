@@ -52,7 +52,10 @@ class Posts extends Database {
     }
     
     public function get_one_posts($id){
+        // $id = (int)$id;
+        $id = addslashes($id);
         $query = "select * from posts where id= '$id' limit 1";
+        echo "$query";
 			return $this->db_read($query);
     }
     
@@ -84,6 +87,8 @@ class User extends Database {
     
             //get user
             $query = "select * from users where email = '$email' && password = '$password' ";
+            // echo "$query";
+            // die;
             $result = $this->db_read($query);
     
             if($result)
@@ -107,7 +112,7 @@ function access($needed_rank)
 {
     $user_rank =isset( $_SESSION['user_rank']) ?  $_SESSION['user_rank'] : "";
     switch ($needed_rank) {
-        case 'value':
+        case 'admin':
             # code...
             $allowed[] = "admin";
 
